@@ -27,7 +27,7 @@ server.use(cookieParser());
 server.use(
   cors({
     credentials: true,
-    origin: "https://cinemmax.vercel.app/",
+    origin: "https://cinemmax.vercel.app",
     exposedHeaders: ["Authorization"],
   })
 );
