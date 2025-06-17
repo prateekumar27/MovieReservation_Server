@@ -3,7 +3,7 @@ import express from "express";
 import {
   createPaypalOrder,
   capturePaypalOrder,
-} from "../controllers/payment.controller.js";
+} from "../Controllers/payment.controller.js";
 
 const router = express.Router();
 
