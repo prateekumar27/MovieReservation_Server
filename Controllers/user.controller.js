@@ -43,7 +43,8 @@ const userSignupController = async (req, res) => {
   });
 
   const userId = userDetails._id;
-  const verifyUrl = `http://localhost:3000/api/verify-email/${userId}/${email_Token}`;
+  const verifyUrl = `${process.env.BACKEND_URL}/api/verify-email/${userId}/${email_Token}`;
+
   const subject = "Email verification";
 
   const content = emailVerificationTemplate({ userName: name, verifyUrl });
@@ -66,13 +67,14 @@ const emailVerifyController = async (req, res) => {
   if (user.emailToken !== email_Token) {
     return res
       .status(400)
-      .redirect("http://localhost:5173/verification-failed");
+      .redirect(`${process.env.FRONTEND_URL}/verification-failed`);
+
     // throw new CustomError("Invalid email token", 400);
   }
   user.isMailVerified = true;
   user.emailToken = undefined;
   await user.save();
-  return res.status(200).redirect("http://localhost:5173/login");
+  return res.status(200).redirect(`${process.env.FRONTEND_URL}/login`);
 };
 
 //user signin
@@ -118,7 +120,6 @@ const userSigninController = async (req, res) => {
     token, // ✅ Include token here
   });
 };
-
 
 //send otp
 const sendOtpController = async (req, res) => {
