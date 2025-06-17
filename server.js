@@ -41,6 +41,10 @@ server.use(
 server.use(express.json());
 
 //Middleware to use the routes
+server.get("/", (req, res) => {
+  res.status(200).send("Movie Reservation Backend is running ");
+});
+
 server.use("/api", Routes);
 server.use("/api/admin", adminRouter);
 server.use("/api/movie", movieRouter);

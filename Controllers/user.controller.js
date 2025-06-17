@@ -108,16 +108,16 @@ const userSigninController = async (req, res) => {
     { expiresIn: "1d" }
   );
 
-  // Optionally still set it in headers (for browser use)
+ 
   res.set("Authorization", `Bearer ${token}`);
 
-  // ✅ Include the token in the response body
+ 
   res.status(200).json({
     message: "User signed in successfully",
     redirectUrl: `${process.env.FRONTEND_URL}/`,
     id: user._id,
     name: user.name,
-    token, // ✅ Include token here
+    token, 
   });
 };
 
