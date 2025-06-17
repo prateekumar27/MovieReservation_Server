@@ -10,10 +10,6 @@ import { bookingRouter } from "./Routes/booking.route.js";
 import { theaterRoutes } from "./Routes/theater.route.js";
 import paypalRouter from "./Routes/payment.route.js";
 
-
-
-
-
 env.config(); //Load environment variables
 
 //Create the server
@@ -27,7 +23,18 @@ server.use(cookieParser());
 server.use(
   cors({
     credentials: true,
-    origin: "https://cinemmax.vercel.app",
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "https://cinemmax.vercel.app",
+        "http://localhost:5173",
+      ];
+      if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+
     exposedHeaders: ["Authorization"],
   })
 );
@@ -37,10 +44,9 @@ server.use(express.json());
 server.use("/api", Routes);
 server.use("/api/admin", adminRouter);
 server.use("/api/movie", movieRouter);
-server.use("/api/booking", bookingRouter)
+server.use("/api/booking", bookingRouter);
 server.use("/api/theater", theaterRoutes);
 server.use("/api/paypal", paypalRouter);
-
 
 // //Middleware to handle options requests
 // server.use((req, res, next) => {
